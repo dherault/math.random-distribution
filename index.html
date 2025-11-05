@@ -40,7 +40,7 @@
       position: absolute;
       width: calc(100% / 100 - 4px);
       bottom: 0px;
-      background-color: steelblue;
+      background-color: lightskyblue;
     }
   </style>
 </head>
@@ -76,7 +76,6 @@
 
       const barMax = Math.max(...barValues);
 
-      // Update bar heights
       barValues.forEach((value, index) => {
         const barHeight = (value / barMax) * barMaxHeight
         bars[index].style.height = barHeight + 'px';
