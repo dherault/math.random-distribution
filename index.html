@@ -29,11 +29,18 @@
 
     .dot {
       position: absolute;
-      width: 2px;
-      height: 2px;
+      width: 4px;
+      height: 4px;
       background-color: lightblue;
       border-radius: 50%;
-      bottom: 0;
+      bottom: 16px;
+    }
+
+    .bar {
+      position: absolute;
+      width: calc(100% / 100 - 4px);
+      bottom: 32px;
+      background-color: steelblue;
     }
   </style>
 </head>
@@ -42,19 +49,42 @@
   <div id="plot"></div>
 
   <script>
+    const CATEGORY_COUNT = 100
+
+    const barValues = new Array(CATEGORY_COUNT).fill(0);
+    const bars = Array.from({ length: CATEGORY_COUNT }, (_, i) => {
+      const bar = document.createElement('div');
+      bar.className = 'bar';
+      bar.style.left = `calc(${(i / CATEGORY_COUNT) * 100}% + 2px)`;
+      bar.style.height = '0px';
+      document.getElementById('plot').appendChild(bar);
+      return bar;
+    });
+
     const plot = document.getElementById('plot');
+    const barMaxHeight = plot.offsetHeight - 32;
 
     setInterval(() => {
       const dot = document.createElement('div');
       dot.className = 'dot';
-      
+
       // Random x position based on Math.random()
       const randomX = Math.random();
       const plotWidth = plot.offsetWidth;
       dot.style.left = (randomX * plotWidth) + 'px';
-      
+
+      barValues[Math.floor(randomX * CATEGORY_COUNT)]++;
+
+      const barMax = Math.max(...barValues);
+
+      // Update bar heights
+      barValues.forEach((value, index) => {
+        const barHeight = (value / barMax) * barMaxHeight
+        bars[index].style.height = barHeight + 'px';
+      });
+
       plot.appendChild(dot);
-    }, 50);
+    }, 1000 / 60);
   </script>
 </body>
 </html>
