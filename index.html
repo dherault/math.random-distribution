@@ -36,19 +36,10 @@
       font-size: 12px;
     }
 
-    .dot {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      background-color: lightblue;
-      border-radius: 50%;
-      bottom: 16px;
-    }
-
     .bar {
       position: absolute;
       width: calc(100% / 100 - 4px);
-      bottom: 32px;
+      bottom: 0px;
       background-color: steelblue;
     }
   </style>
@@ -74,20 +65,14 @@
     });
 
     const plot = document.getElementById('plot');
-    const barMaxHeight = plot.offsetHeight - 32;
-
     const count = document.getElementById('count');
 
+    const barMaxHeight = plot.offsetHeight;
+
     function loop() {
-      const dot = document.createElement('div');
-      dot.className = 'dot';
+      const value = Math.random();
 
-      // Random x position based on Math.random()
-      const randomX = Math.random();
-      const plotWidth = plot.offsetWidth;
-      dot.style.left = (randomX * plotWidth) + 'px';
-
-      barValues[Math.floor(randomX * CATEGORY_COUNT)]++;
+      barValues[Math.floor(value * CATEGORY_COUNT)]++;
 
       const barMax = Math.max(...barValues);
 
@@ -96,8 +81,6 @@
         const barHeight = (value / barMax) * barMaxHeight
         bars[index].style.height = barHeight + 'px';
       });
-
-      plot.appendChild(dot);
 
       count.textContent = parseInt(count.textContent || '0') + 1;
 
