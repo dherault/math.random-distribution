@@ -78,7 +78,7 @@
 
     const count = document.getElementById('count');
 
-    setInterval(() => {
+    function loop() {
       const dot = document.createElement('div');
       dot.className = 'dot';
 
@@ -100,7 +100,11 @@
       plot.appendChild(dot);
 
       count.textContent = parseInt(count.textContent || '0') + 1;
-    }, 1000 / 60);
+
+      requestAnimationFrame(loop);
+    }
+
+    loop()
   </script>
 </body>
 </html>
